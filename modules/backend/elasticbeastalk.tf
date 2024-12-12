@@ -36,14 +36,14 @@ resource "aws_elastic_beanstalk_application_version" "backend_app_version" {
   application = aws_elastic_beanstalk_application.backend.name
   name        = "v1"
   bucket      = "idea-box-terraform"
-  key         = "ideabox-0.0.1_SNAPSHOT.jar"
+  key         = "ideabox-0.0.1-SNAPSHOT.jar"
 }
 
 resource "aws_elastic_beanstalk_environment" "idea_box_back" {
   name                = "idea-box-backend"
   application         = aws_elastic_beanstalk_application.backend.name
   version_label       = aws_elastic_beanstalk_application_version.backend_app_version.name
-  solution_stack_name = "64bit Amazon Linux 2 v3.3.6 running Corretto 11"
+  solution_stack_name = "64bit Amazon Linux 2023 v4.4.1 running Corretto 17"
 
   setting {
     namespace = "aws:autoscaling:launchconfiguration"
