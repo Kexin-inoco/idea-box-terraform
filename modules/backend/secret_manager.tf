@@ -1,5 +1,6 @@
 resource "aws_secretsmanager_secret" "idea_box_bck_creds" {
   name = "IDEA_BOX_BCK_CLUSTER_CREDS"
+  recovery_window_in_days = 0
 }
 
 resource "aws_secretsmanager_secret_version" "idea_box_bck_creds_version" {
@@ -7,16 +8,17 @@ resource "aws_secretsmanager_secret_version" "idea_box_bck_creds_version" {
   secret_string = jsonencode({
     dbClusterIdentifier = local.rds_dbClusterIdentifier,
     password            = local.rds_password,
-    db_name             = "idea-box-db",
+    dbname             = "idea-box-db",
     engine              = "postgres",
     port                = 5432,
-    host                = local.rds_endpoint,
+    host                = regex("([^:]+)", local.rds_endpoint)[0], #only keeps host, before is => host:point
     username            = "devuser",
   })
 }
 
 resource "aws_secretsmanager_secret" "conito_creds" {
   name = "COGNITO_CREDS"
+  recovery_window_in_days = 0
 }
 
 resource "aws_secretsmanager_secret_version" "conito_creds_version" {

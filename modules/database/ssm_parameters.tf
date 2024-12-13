@@ -25,3 +25,9 @@ resource "aws_ssm_parameter" "rds_password" {
   type = "SecureString"
   value = jsondecode(data.aws_secretsmanager_secret_version.rds_password.secret_string)["password"]
 }
+
+resource "aws_ssm_parameter" "rds_security_group_id" {
+  name = "/idea-box/aws-security-group"
+  type = "String"
+  value = aws_security_group.rds_sg.id
+}
